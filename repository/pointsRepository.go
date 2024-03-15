@@ -27,6 +27,6 @@ func (repo *PointRepository) Put(id string, points int) {
 
 // Get retrieves the points associated with the given ID from the repository.
 func (repo *PointRepository) Get(id string) (int, bool) {
-	points, ok := repo.data[id]
-	return points, ok
+	points, exists := repo.data[id]
+	return points, exists
 }

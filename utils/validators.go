@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"log"
 	"regexp"
 	"time"
 
@@ -10,15 +9,6 @@ import (
 
 func ValidatePrice(fl validator.FieldLevel) bool {
 	return validateRegex(`^\d+\.\d{2}$`, fl.Field().String())
-}
-
-func ValidateRetailer(fl validator.FieldLevel) bool {
-	return validateRegex(`^[\w\s\-]+$`, fl.Field().String())
-}
-
-func ValidateDescription(fl validator.FieldLevel) bool {
-	log.Println("In", validateRegex(`^[\w\s\-]+$`, fl.Field().String()))
-	return validateRegex(`^[\w\s\-]+$`, fl.Field().String())
 }
 
 func ValidatePurchaseDate(fl validator.FieldLevel) bool {
