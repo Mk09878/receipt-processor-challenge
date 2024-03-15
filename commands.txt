@@ -1,6 +1,8 @@
 GET
 Invoke-WebRequest -Uri "http://localhost:8080/receipts/47d4a1a0-16f2-4b32-886e-59bf03c0abc8/points" -Method GET
 
+Invoke-WebRequest -Uri "http://localhost:8080/receipts/test" -Method GET
+
 POST1
 Invoke-WebRequest -Uri "http://localhost:8080/receipts/process" -Method POST -ContentType "application/json" -Body '{
   "retailer": "Target",
@@ -52,11 +54,11 @@ Invoke-WebRequest -Uri "http://localhost:8080/receipts/process" -Method POST -Co
 
 POST3
 Invoke-WebRequest -Uri "http://localhost:8080/receipts/process" -Method POST -ContentType "application/json" -Body '{
-  "purchaseDate": "2022-03-20",
-  "purchaseTime": "14:33",
+  "retailer": "Abc",
+  "purchaseDate": "2012-03-12",
+  "purchaseTime": "18:33",
   "items": [
     {
-      "shortDescription": "Gatorade",
       "price": "2.25"
     },{
       "shortDescription": "Gatorade",
@@ -69,6 +71,6 @@ Invoke-WebRequest -Uri "http://localhost:8080/receipts/process" -Method POST -Co
       "price": "2.25"
     }
   ],
-  "total": "9.00"
+  "total": "6.49"
 }'
 
