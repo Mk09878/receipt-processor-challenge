@@ -2,6 +2,7 @@ package main
 
 import (
 	"processor/receipt-processor-challenge/controller"
+	middleware "processor/receipt-processor-challenge/middleWare"
 	"processor/receipt-processor-challenge/repository"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +11,11 @@ import (
 func main() {
 	pointRepository := repository.GetPointRepository()
 	router := gin.Default()
+
+	// Middleware
+	router.Use(middleware.LoggingMiddleware)
+	router.Use(middleware.CorsMiddleware())
+
 	router.GET("/receipts/:id/points", func(c *gin.Context) {
 		controller.GetPointsById(c, pointRepository)
 	})
