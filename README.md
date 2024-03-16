@@ -12,8 +12,14 @@ There are 2 options to run this application
 1. You need to have docker (and docker compose) installed
 
 #### Run the application:
-1. Building the docker image ```docker-compose build```
-2. Running the image in a container ```docker-compose up```
+1. Building the docker image:
+```
+docker-compose build
+```
+2. Running the image in a container:
+```
+docker-compose up
+```
 
 
 ### Manual
@@ -27,15 +33,30 @@ go mod download
 ```
 
 #### Running tests and generating coverage data
-1. Running tests and generating coverage: ```go test -coverprofile=coverage ./...```
-2. Generating an html file to easily view coverage results: ```go tool cover -html=coverage -o coverage.html```
+1. Running tests and generating coverage:
+```
+go test -coverprofile=coverage ./...
+```
+2. Generating an html file to easily view coverage results:
+```
+go tool cover -html=coverage -o coverage.html
+```
 
 
 #### Run the application:
-1. Running the application: ```go run main.go```
+1. Running the application:
+```
+go run main.go
+```
 OR
-1. Building the application: ```go build -o receipt-processor main.go```
-2. Running the application: ```./receipt-processor```
+1. Building the application:
+```
+go build -o receipt-processor main.go
+```
+2. Running the application:
+```
+./receipt-processor
+```
 
 ## Note
 
