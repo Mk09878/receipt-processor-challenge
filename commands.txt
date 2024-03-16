@@ -52,7 +52,7 @@ Invoke-WebRequest -Uri "http://localhost:8080/receipts/process" -Method POST -Co
   "total": "9.00"
 }'
 
-POST3
+POST-Invalid request
 Invoke-WebRequest -Uri "http://localhost:8080/receipts/process" -Method POST -ContentType "application/json" -Body '{
   "retailer": "",
   "purchaseDate": "2012-03-12",

@@ -40,6 +40,7 @@ OR
 ## Note
 
 * The service does the processing of receipt during the write operation. This makes the read operations very light. If the service however is write heavy, the roles of the APIs can be switched.
+* commands.txt contains commands to call the service. They are for Windows OS. curl equivalents can be used for Mac and Linux OS systems.
 * The API validators have been written per the specifications defined in the yml file. However, the retailer and the shortDescripton have not been validated per the regex. This is because the example (M&M Corner Market) provided do not satisfy the regex and would throw an error.
 
 ## Improvements
