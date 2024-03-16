@@ -7,7 +7,6 @@ import (
 	"net/http/httptest"
 	"processor/receipt-processor-challenge/controller"
 	"processor/receipt-processor-challenge/repository"
-	"strings"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -101,7 +100,15 @@ func TestReceipt1(t *testing.T) {
 	assert.Equal(t, http.StatusCreated, postRecorder.Code)
 
 	// Extract the ID from the response body
-	id := strings.Trim(postRecorder.Body.String(), `"`)
+	var responseBody map[string]interface{}
+	err := json.Unmarshal(postRecorder.Body.Bytes(), &responseBody)
+	if err != nil {
+		t.Fatalf("failed to unmarshal response body: %v", err)
+	}
+
+	// Ensure that the response body contains the "id" field
+	id, ok := responseBody["id"].(string)
+	assert.True(t, ok, "response body does not contain 'id' field")
 
 	// Ensure that the ID is not empty
 	assert.NotEmpty(t, id)
@@ -115,8 +122,8 @@ func TestReceipt1(t *testing.T) {
 	assert.Equal(t, http.StatusOK, getRecorder.Code)
 
 	// Validate the response body
-	var responseBody map[string]interface{}
-	err := json.Unmarshal(getRecorder.Body.Bytes(), &responseBody)
+	responseBody = nil
+	err = json.Unmarshal(getRecorder.Body.Bytes(), &responseBody)
 	if err != nil {
 		t.Fatalf("failed to unmarshal response body: %v", err)
 	}
@@ -142,7 +149,15 @@ func TestReceipt2(t *testing.T) {
 	assert.Equal(t, http.StatusCreated, postRecorder.Code)
 
 	// Extract the ID from the response body
-	id := strings.Trim(postRecorder.Body.String(), `"`)
+	var responseBody map[string]interface{}
+	err := json.Unmarshal(postRecorder.Body.Bytes(), &responseBody)
+	if err != nil {
+		t.Fatalf("failed to unmarshal response body: %v", err)
+	}
+
+	// Ensure that the response body contains the "id" field
+	id, ok := responseBody["id"].(string)
+	assert.True(t, ok, "response body does not contain 'id' field")
 
 	// Ensure that the ID is not empty
 	assert.NotEmpty(t, id)
@@ -156,8 +171,8 @@ func TestReceipt2(t *testing.T) {
 	assert.Equal(t, http.StatusOK, getRecorder.Code)
 
 	// Validate the response body
-	var responseBody map[string]interface{}
-	err := json.Unmarshal(getRecorder.Body.Bytes(), &responseBody)
+	responseBody = nil
+	err = json.Unmarshal(getRecorder.Body.Bytes(), &responseBody)
 	if err != nil {
 		t.Fatalf("failed to unmarshal response body: %v", err)
 	}

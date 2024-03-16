@@ -33,7 +33,7 @@ func AddReceipt(c *gin.Context, pointRepository *repository.PointRepository) {
 	// Store id -> point pair
 	pointRepository.Put(id.String(), points)
 
-	c.IndentedJSON(http.StatusCreated, id)
+	c.IndentedJSON(http.StatusCreated, gin.H{"id": id.String()})
 }
 
 func GetPointsById(c *gin.Context, pointRepository *repository.PointRepository) {

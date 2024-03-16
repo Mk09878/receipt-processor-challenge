@@ -14,15 +14,15 @@ COPY . .
 RUN go test ./...
 
 # Build the Go application
-RUN CGO_ENABLED=0 GOOS=linux go build -o /fetch-rewards-processor
+RUN CGO_ENABLED=0 GOOS=linux go build -o /receipt-processor
 
 # Stage 2: Create a minimal image with only the binary
 FROM alpine:latest
 
 # Copy the built binary from the previous stage
-COPY --from=build /fetch-rewards-processor /fetch-rewards-processor
+COPY --from=build /receipt-processor /receipt-processor
 COPY .env /
 
 EXPOSE ${PORT}
 
-CMD ["/fetch-rewards-processor"]
+CMD ["/receipt-processor"]

@@ -1,25 +1,82 @@
 # Receipt Processor
 
-Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided 
-in the [api.yml](./api.yml) file, but the information in this README is sufficient for completion of this challenge. We will use the 
-described API to test your solution.
+A webservice that processes and calculates points for a receipt. The calculated points are stored in-memory associated with a randomly generated id. The post API is responsible for doing this and returns the id back to the client. Doing a get request on this id, will return the points associated with the receipt.
 
-Provide any instructions required to run your application.
+## Running the application
 
-Data does not need to persist when your application stops. It is sufficient to store information in memory. There are too many different database solutions, we will not be installing a database on our system when testing your application.
+There are 2 options to run this application
 
-## Language Selection
+### Docker
 
-You can assume our engineers have Go and Docker installed to run your application. Go is our preferred language, but it is not a requirement for this exercise.
+##### Pre-req
+1. You need to have docker (and docker compose) installed
 
-If you are using a language other than Go, the engineer evaluating your submission may not have an environment ready for your language. Your instructions should include how to get an environment in any OS that can run your project. For example, if you write your project in Javascript simply stating to "run `npm start` to start the application" is not sufficient, because the engineer may not have NPM. Providing a docker file and the required docker command is a simple way to satisfy this requirement.
+#### Run the application:
+1. Building the docker image ```docker-compose build```
+2. Running the image in a container ```docker-compose up```
 
-## Submitting Your Solution
 
-Provide a link to a public repository, such as GitHub or BitBucket, that contains your code to the provided link through Greenhouse.
+### Manual
 
----
-## Summary of API Specification
+#### Pre-req
+You need to have Go installed
+
+#### Install dependencies
+```
+go mod download
+```
+
+#### Running tests and generating coverage data
+1. Running tests and generating coverage: ```go test -coverprofile=coverage ./...```
+2. Generating an html file to easily view coverage results: ```go tool cover -html=coverage -o coverage.html```
+
+
+#### Run the application:
+1. Building the application: ```go build -o receipt-processor main.go```
+2. Running the application: ```./receipt-processor```
+
+## Note
+
+* The service does the processing of receipt during the write operation. This makes the read operations very light. If the service however is write heavy, the roles of the APIs can be switched.
+* The API validators have been written per the specifications defined in the yml file. However, the retailer and the shortDescripton have not been validated per the regex. This is because the example (M&M Corner Market) provided do not satisfy the regex and would throw an error.
+
+## Improvements
+
+* Database can be added for persistence
+* Validators can be extended to send custom error messages
+* Logging middleware can be extended to write to a log file
+* Thread support can be added in the repository
+* Code coverage can be improved
+
+## Project Structure
+
+### controller
+The controller acts as an interface between the client and the application.
+It handles user input and delegates further processing to appropriate services or models.
+It is responsible for controlling the flow of the application.
+
+### middleware
+Middleware intercepts and manipulates requests and responses.
+It helps in keeping the application's core logic clean and decoupled from cross-cutting concerns.
+
+### model
+It defines the structure and behavior of data entities or objects used by the application. It includes validation logic to ensure data is valid before reaching the business logic. 
+
+### repository
+The repository provides an abstraction layer between the application and the data storage.
+It encapsulates the logic required to access and manipulate data which in our case is an in-memory map.
+
+### service
+Service layer houses the business logic of the application. In this case, prcoessing of the receipt resides here.
+
+### utils
+The utils package typically contains reusable functions or classes that provide common functionality used across the application. In this case, I have used it for string manipulation and perform validations.
+
+## Patterns
+
+The repository uses the Singleton pattern to ensure connections will be reused across multiple requests. It also ensures that all parts of the application interact with the same repository instance, promoting consistency and predictability in data access and manipulation. 
+
+## API Specification
 
 ### Endpoint: Process Receipts
 
@@ -34,10 +91,6 @@ Takes in a JSON receipt (see example in the example directory) and returns a JSO
 
 The ID returned is the ID that should be passed into `/receipts/{id}/points` to get the number of points the receipt
 was awarded.
-
-How many points should be earned are defined by the rules below.
-
-Reminder: Data does not need to survive an application restart. This is to allow you to use in-memory solutions to track any data generated by this endpoint.
 
 Example Response:
 ```json
@@ -151,24 +204,3 @@ Breakdown:
   + ---------
   = 109 points
 ```
-
----
-
-# FAQ
-
-### How will this exercise be evaluated?
-An engineer will review the code you submit. At a minimum they must be able to run the service and the service must provide the expected results. You
-should provide any necessary documentation within the repository. While your solution does not need to be fully production ready, you are being evaluated so
-put your best foot forward.
-
-### I have questions about the problem statement
-For any requirements not specified via an example, use your best judgment to determine the expected result.
-
-### Can I provide a private repository?
-If at all possible, we prefer a public repository because we do not know which engineer will be evaluating your submission. Providing a public repository
-ensures a speedy review of your submission. If you are still uncomfortable providing a public repository, you can work with your recruiter to provide access to
-the reviewing engineer.
-
-### How long do I have to complete the exercise?
-There is no time limit for the exercise. Out of respect for your time, we designed this exercise with the intent that it should take you a few hours. But, please
-take as much time as you need to complete the work.
