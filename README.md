@@ -32,6 +32,8 @@ go mod download
 
 
 #### Run the application:
+1. Running the application: ```go run main.go```
+OR
 1. Building the application: ```go build -o receipt-processor main.go```
 2. Running the application: ```./receipt-processor```
 

@@ -1,5 +1,5 @@
 GET
-Invoke-WebRequest -Uri "http://localhost:8080/receipts/a33b869b-57d7-421d-a06a-71795b00f207/points" -Method GET
+Invoke-WebRequest -Uri "http://localhost:8080/receipts/27fc6486-64bf-4d66-ab1c-070d29c02e54/points" -Method GET
 
 Invoke-WebRequest -Uri "http://localhost:8080/receipts/test" -Method GET
 
